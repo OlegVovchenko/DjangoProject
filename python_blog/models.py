@@ -64,4 +64,6 @@ posts = Post.objects.all().order_by("-created_at")
 posts = Post.objects.filter(category=None)
 Применим к полученному QuerySet сортировку
 posts = posts.order_by("-created_at")
+
+6.
 """
