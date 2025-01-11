@@ -1,4 +1,3 @@
-from unicodedata import category
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.urls import reverse
@@ -15,12 +14,9 @@ def main(request):
     catalog_categories_url: str = reverse('blog:catalog_categories')
     catalog_tags_url: str = reverse('blog:catalog_tags')
     catalog_posts_url: str = reverse('blog:catalog_posts')
-    return HttpResponse(f"""
-        <h1>Главная страница</h1>
-        <p><a href="{catalog_categories_url}">Каталог категорий</a></p>
-        <p><a href="{catalog_tags_url}">Каталог тегов</a></p>
-        <p><a href="{catalog_posts_url}">Каталог постов</a></p>
-    """)
+
+    return render(request, "main.html")
+
 
 def catalog_posts(request):
     return HttpResponse('Каталог постов')
