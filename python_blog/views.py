@@ -1,6 +1,5 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from django.template import context
 from django.urls import reverse
 
 CATEGORIES = [
@@ -16,8 +15,10 @@ def main(request):
     catalog_tags_url: str = reverse('blog:catalog_tags')
 
     context = {
-        'title': 'Главная страница',
-        'text': 'Текст главной страницы',
+        "title": "Главная страница",
+        "text": "Текст главной страницы",
+        "user_status": "admin",
+
     }
     return render(request, "main.html", context)
 
@@ -35,12 +36,12 @@ def catalog_categories(request):
         links.append(f'<p><a href="{url}">{category["name"]}</a></p>')
 
 
-    # Ссылка в reverse на name пути из python_blog.urls
-    return HttpResponse(f"""
-        <h1>Каталог категорий</h1>
-        {''.join(links)}
-        <p><a href="{reverse('blog:catalog_posts')}">К списку постов</a></p>
-    """)    
+    context: dict[str, Any] = {
+        "title": "Категории",
+        "text": "Текст страницы с категориями",
+        "categories": CATEGORIES,
+    }
+    return render(request, "catalog_categories.html", context)
 
 def category_detail(request, category_slug):
     category: dict[str, str] = [cat for cat in CATEGORIES if cat['slug'] == category_slug][0]
