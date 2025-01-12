@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{title}}</title>
+    <title>Каталог категорий</title>
 </head>
 <body>
     <h1>{{ title }}</h1>
@@ -18,7 +18,7 @@
     {% comment %} Хардкордный URL {% endcomment %}
     <a href="{{ category.slug}}">{{ category.name }}</a>
 
-    {% comment %} Правильное написание URL {% endcomment %}
+    {% comment %} Правильное написание URL(шаблонный тег URL) {% endcomment %}
     <a href="{% url "blog:category_detail" category.slug %}">{{ category.name }}</a>
     <hr>
     {% endfor %}
