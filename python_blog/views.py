@@ -49,12 +49,12 @@ def category_detail(request, category_slug):
     else:
         name: Any = category_slug
 
+    context: dict[str, str] = {
+        "title": f"Категория {name}",
+        "text": f"Текст категории {name}",
+    }
 
-    # Ссылка в reverse на name пути из python_blog.urls
-    return HttpResponse(f"""
-    <h1>Категория: {name}</h1>
-    <p><a href="{reverse('blog:catalog_categories')}">Назад к категориям</a></p>
-""")
+    return render(request, "category_detail.html", context)
 
 def catalog_tags(request):
     return HttpResponse('Каталог тегов')
