@@ -6,6 +6,10 @@
     <title>Главная страница</title>
 </head>
 <body>
-    <h1>Главная страница</h1>
+    
+    <h1>{{ title }}</h1>
+    <p>{{ text }}</p>
+    <p><a href="{% url 'blog:catalog_categories' %}">Каталог категорий</a></p>
+    <p><a href="{% url 'blog:catalog_tags' %}">Каталог тегов</a></p>
 </body>
 </html>

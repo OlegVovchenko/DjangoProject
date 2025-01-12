@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.template import context
 from django.urls import reverse
 
 CATEGORIES = [
@@ -13,9 +14,12 @@ CATEGORIES = [
 def main(request):
     catalog_categories_url: str = reverse('blog:catalog_categories')
     catalog_tags_url: str = reverse('blog:catalog_tags')
-    catalog_posts_url: str = reverse('blog:catalog_posts')
 
-    return render(request, "main.html")
+    context = {
+        'title': 'Главная страница',
+        'text': 'Текст главной страницы',
+    }
+    return render(request, "main.html", context)
 
 
 def catalog_posts(request):
