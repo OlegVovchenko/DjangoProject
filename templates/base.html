@@ -1,12 +1,14 @@
 {% comment %} ./base.html
 Базовый шаблон для всего проекта
 {% endcomment %}
+{% load static %}
 <!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
 </head>
 <body>
     <header>
@@ -21,5 +23,6 @@
         Все права защищены. Python422. Академия Топ. 2025 г.
         {% endblock %}
     </footer>
+    <script src="{% static 'js/main.js' %}"></script>
 </body>
 </html>
