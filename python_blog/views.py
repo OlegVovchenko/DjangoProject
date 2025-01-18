@@ -19,7 +19,6 @@ def main(request):
         "title": "Главная страница",
         "text": "Текст главной страницы",
         "user_status": "admin",
-
     }
     return render(request, "main.html", context)
 
