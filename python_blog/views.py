@@ -23,6 +23,14 @@ def main(request):
     }
     return render(request, "main.html", context)
 
+def about(request):
+
+    context = {
+        "title": "О нас",
+        "text": "Текст страницы о нас",
+    }
+    return render(request, "about.html", context)
+
 
 def catalog_posts(request):
     return HttpResponse('Каталог постов')

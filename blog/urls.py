@@ -1,12 +1,13 @@
 from django.contrib import admin
 from django.urls import path, include
-from python_blog.views import main
+from python_blog.views import main, about
 
 from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('about/', about, name='about'),
     path('', main, name='main'),
 
     # Подключаем python_blog.urls
