@@ -26,17 +26,29 @@ def main(request):
 def about(request):
 
     context = {
-        "title": "О нас",
-        "text": "Текст страницы о нас",
+        "title": "О компании",
+        "text": "Мы - команда профессионалов в области веб-разработки",
     }
     return render(request, "about.html", context)
 
 
 def catalog_posts(request):
-    return HttpResponse('Каталог постов')
+    # Получаем все опубликованные посты
+    posts = [post for post in dataset if post['is_published']]
+    context = {
+        'title': 'Блог',
+        'posts': posts
+    }
+    return render(request, 'blog.html', context)
 
 def post_detail(request, post_slug):
-    return HttpResponse(f'Страница поста {post_slug}')
+    post = next((post for post in dataset if post['slug'] == post_slug), None)
+    
+    context = {
+        'title': post['title'],
+        'post': post
+    }
+    return render(request, 'post_detail.html', context)
 
 def catalog_categories(request):
     links: list[Any] = []
@@ -61,7 +73,7 @@ def category_detail(request, category_slug):
 
     context: dict[str, str] = {
         "title": f"Категория {name}",
-        "text": f"Текст категории {name}",
+        "text": f"Текст категории {name}"
     }
 
     return render(request, "category_detail.html", context)

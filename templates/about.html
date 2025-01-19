@@ -1,70 +1,105 @@
 {% extends "base.html" %}
 
 {% block title %}
-О нас
-{% endblock title %}
+О нас | {{ title }}
+{% endblock %}
 
 {% block content %}
-    <div class="container my-4">
-        <h1 class="text-center">О нас</h1>
-        <p class="text-center">Мы - команда профессионалов, стремящихся к созданию лучших веб-приложений на платформе Django. С 2010 года мы помогаем бизнесам становиться успешнее, используя передовые технологии.</p>
-        <hr>
-
-        <div class="row">
-            <div class="col-md-6">
-                <h2>Наша История</h2>
-                <p>Наша компания была основана в 2010 году группой единомышленников. С тех пор мы прошли через множество изменений и адаптаций, оставаясь верными своей миссии — создавать качественные и надежные решения для клиентов. Мы начинали с небольшого офиса и со временем разрослись в команду из более чем 50 специалистов.</p>
-            </div>
-            <div class="col-md-6">
-                <h2>Наша Миссия</h2>
-                <p>Мы стремимся предоставить нашим клиентам инструменты, которые помогут им достичь максимальной эффективности в бизнесе. Наша цель - создать интуитивно понятные и функциональные веб-приложения, которые будут удовлетворять потребности пользователей.</p>
-            </div>
+<div class="container mt-4">
+    <!-- Hero секция -->
+    <div class="row mb-5">
+        <div class="col-12 text-center">
+            <h1><i class="bi bi-building"></i> О нашей компании</h1>
+            <p class="lead">Мы создаем будущее веб-разработки</p>
         </div>
-
-        <hr>
-        <h2 class="text-center">Наша Команда</h2>
-        <div class="row">
-            <div class="col-md-4">
-                <div class="card mb-4 shadow-sm">
-                    <div class="card-body">
-                        <h5 class="card-title">Иван Иванов</h5>
-                        <p class="card-text">Генеральный директор</p>
-                        <p>С более чем 15-летним опытом в индустрии, Иван ведет нашу команду к новым вершинам.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card mb-4 shadow-sm">
-                    <div class="card-body">
-                        <h5 class="card-title">Мария Петрова</h5>
-                        <p class="card-text">Руководитель проектов</p>
-                        <p>Мария отвечает за успешную реализацию проектов, делая всё возможное для удовлетворенности клиентов.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card mb-4 shadow-sm">
-                    <div class="card-body">
-                        <h5 class="card-title">Алексей Смирнов</h5>
-                        <p class="card-text">Ведущий разработчик</p>
-                        <p>Алексей является экспертом в области Django и отвечает за архитектуру и качество нашего кода.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <hr>
-        <h2 class="text-center">Наши Достижения</h2>
-        <ul class="list-group mb-4">
-            <li class="list-group-item">2021: Лучший стартап года по версии TechCrunch</li>
-            <li class="list-group-item">2020: Сертификация ISO 9001</li>
-            <li class="list-group-item">2019: Успешное завершение более 100 проектов</li>
-            <li class="list-group-item">2018: Публикация в Forbes о нашем подходе к разработке</li>
-        </ul>
-
-        <hr>
-        <h2 class="text-center">Контакты</h2>
-        <p class="text-center">Если вы хотите связаться с нами, вы можете написать на email: <a href="mailto:info@company.com">info@company.com</a>.</p>
-        <p class="text-center">Или позвоните нам: <a href="tel:+1234567890">+1 (234) 567-890</a>.</p>
     </div>
-{% endblock content %}
+
+    <!-- Основной контент -->
+    <div class="row">
+        <div class="col-md-6">
+            <h2><i class="bi bi-trophy"></i> Наши достижения</h2>
+            <div class="card mb-4">
+                <div class="card-body">
+                    <div class="row text-center">
+                        <div class="col-4">
+                            <h3>500+</h3>
+                            <p>Студентов</p>
+                        </div>
+                        <div class="col-4">
+                            <h3>50+</h3>
+                            <p>Курсов</p>
+                        </div>
+                        <div class="col-4">
+                            <h3>95%</h3>
+                            <p>Трудоустройство</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <h2><i class="bi bi-gear"></i> Технологии</h2>
+            <div class="card mb-4">
+                <div class="card-body">
+                    <div class="d-flex flex-wrap gap-2">
+                        <span class="badge bg-primary">Python</span>
+                        <span class="badge bg-success">Django</span>
+                        <span class="badge bg-info">PostgreSQL</span>
+                        <span class="badge bg-warning">JavaScript</span>
+                        <span class="badge bg-danger">Redis</span>
+                        <span class="badge bg-secondary">Docker</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Команда -->
+    <div class="row mt-5">
+        <div class="col-12">
+            <h2 class="text-center mb-4"><i class="bi bi-people"></i> Наша команда</h2>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card text-center">
+                <div class="card-body">
+                    <i class="bi bi-person-circle display-4"></i>
+                    <h5 class="card-title mt-3">Иван Петров</h5>
+                    <p class="card-text">CEO & Основатель</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card text-center">
+                <div class="card-body">
+                    <i class="bi bi-person-circle display-4"></i>
+                    <h5 class="card-title mt-3">Мария Сидорова</h5>
+                    <p class="card-text">Ведущий преподаватель</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card text-center">
+                <div class="card-body">
+                    <i class="bi bi-person-circle display-4"></i>
+                    <h5 class="card-title mt-3">Алексей Иванов</h5>
+                    <p class="card-text">Технический директор</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Контакты -->
+    <div class="row mt-5">
+        <div class="col-12">
+            <div class="card bg-light">
+                <div class="card-body text-center">
+                    <h3><i class="bi bi-envelope"></i> Свяжитесь с нами</h3>
+                    <p class="mb-0">Email: info@company.com</p>
+                    <p class="mb-0">Телефон: +7 (999) 123-45-67</p>
+                    <p>Адрес: г. Москва, ул. Примерная, д. 1</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
