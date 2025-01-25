@@ -1,4 +1,7 @@
 from django.db import models
+from django.urls import reverse
+from django.utils.text import slugify
+from unidecode import unidecode
 
 
 class Post(models.Model):
@@ -17,9 +20,38 @@ class Post(models.Model):
     )
 
 class Category(models.Model):
-    name = models.CharField(max_length=100)
-    slug = models.SlugField(max_length=100, unique=True)
-    description = models.TextField(blank=True, null=True, default='Без описания')
+    name = models.CharField(max_length=100, verbose_name="Название")
+    slug = models.SlugField(max_length=100, unique=True, verbose_name="Слаг")
+    description = models.TextField(blank=True, null=True, default="Без описания", verbose_name="Описание")
+
+    def __str__(self):
+        return self.name
+
+    def get_absolute_url(self):
+        """
+        Метод возвращает абсолютный URL для объекта Category
+        В админке Django, при создании или редактировании категории, будет ссылка "Посмотреть на сайте". В шаблонах тоже удобно вызвать его.
+        """
+        return reverse("blog:category_detail", args=[self.slug])
+
+    def save(self, *args, **kwargs):
+        """
+        Служебный метод для сохранения объекта в базу данных.
+        Мы расширяем его, чтобы изменить логику сохранения объекта.
+        """
+        self.slug = slugify(unidecode(self.name))
+        super().save(*args, **kwargs)
+
+    class Meta:
+        """
+        Специальный вложенный  класс для настроек модели.
+        """
+        verbose_name = "Категория"
+        verbose_name_plural = "Категории"
+        ordering = ["name"]
+
+
+
 
 
 # PRACTICE - Работа с моделью Post
@@ -78,6 +110,65 @@ posts = Post.objects.all().order_by("-created_at")
 posts = Post.objects.filter(category=None)
 Применим к полученному QuerySet сортировку
 posts = posts.order_by("-created_at")
+"""
 
-6.
+# PRACTICE - Работа с моделью Category
+
+"""
+0. Запускаем shell  plus --print-sql
+python manage.py shell_plus --print-sql
+
+1. Создать новую категорию
+category_1 = Category(name="Django", slug="django").save()
+category_2 = Category(name="Python", slug="python").save()
+category_3 = Category(name="Postgresql", slug="postgresql").save()
+category_4 = Category(name="Docker", slug="docker").save()
+category_5 = Category(name="Linux", slug="linux").save()
+
+
+2. Получим все посты
+posts = Post.objects.all()
+
+
+3. Возьмем первый пост
+post_1 = posts[0]
+
+django_category = Category.objects.get(name="Django")
+
+4. post_1 - хочу присвоить категорию django_category
+post_1.category = django_category
+post_1.save()
+
+post_1 - это объект, который мы получили из базы данных.
+post_1.title - это поле title у объекта post_1
+post_1.category - экземпляр объекта Category, который мы присвоили объекту post_1
+
+post_1.category.name - Django
+
+# Обратное связывание. Мы обозначили relaated_name="posts" в модели Post
+
+# Получим все посты по объекту категории
+category = Category.objects.get(name="Django")
+django_posts = category.posts.all()
+
+# Если бы не было relaated_name="posts"
+
+category = Category.objects.get(name="Django")
+django_posts = Post.objects.filter(category=category)
+# или
+
+django_posts = Post.objects.filter(category__name="Django")
+
+
+
+#################################  После обновления модели Category  ###################################################
+
+Пробуем создать категорию (Убедимся, что кирилица не обрабатывается!!!)
+
+category_6 = Category(name="Linux Аврора").save()
+category_7 = Category(name="Добрый добрый JS").save()
+
+category_8 = Category(name="Постгра").save()
+category_9 = Category(name="Оракл").save()
+
 """
