@@ -1,12 +1,15 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=`, initial-scale=1.0">
-    <title>Детально о категориях</title>
-</head>
-<body>    
-    <h1>{{ title }}</h1>
-    <p>{{ text }}</p>
-</body>
-</html>
+{% extends "base.html" %}
+{% block content %}
+
+{% comment %}
+Выводим поля модели category
+- name
+- slug
+
+{% endcomment %}
+
+<h1>{{ category.name }}</h1>
+
+<p>Слаг: {{ category.slug }}</p>
+
+{% endblock content %}

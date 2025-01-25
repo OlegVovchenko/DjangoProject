@@ -16,7 +16,8 @@
     {% comment %} Правильное написание URL(шаблонный тег URL) {% endcomment %}
     <a href="{% url "blog:category_detail" category.slug %}">{{ category.name }}</a>
     {% comment %} Пример ссылки с get_absolut_url {% endcomment %}
-    <a href="{{ category.get_absolut_url }}">{{ category.name }}</a>
+    <a href="{{ category.get_absolute_url }}">{{ category.name }}</a>
     <hr>
+    <h2>Посты этой категории</h2>
     {% endfor %}
     {% endblock content %}

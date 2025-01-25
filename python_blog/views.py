@@ -1,3 +1,4 @@
+import re
 from sre_parse import CATEGORIES
 from django.shortcuts import render
 from django.http import HttpResponse
@@ -47,7 +48,7 @@ def post_detail(request, post_slug):
 def catalog_categories(request):
     
     CATEGORIES = Category.objects.all()
-    
+
     context: dict[str, Any] = {
         "title": "Категории",
         "text": "Текст страницы с категориями",
@@ -56,18 +57,11 @@ def catalog_categories(request):
     return render(request, "catalog_categories.html", context)
 
 def category_detail(request, category_slug):
-    category: dict[str, str] = [cat for cat in CATEGORIES if cat['slug'] == category_slug][0]
-    if category:
-        name: str = category['name']
-    else:
-        name: Any = category_slug
+    category: dict[str, str] = Category.objects.filter(slug=category_slug).first()
+    posts: list[dict[str, str]] = Post.objects.filter(category=category)
 
-    context: dict[str, str] = {
-        "title": f"Категория {name}",
-        "text": f"Текст категории {name}"
-    }
+    return render(request, "category_detail.html", {"category": category, "posts": posts})
 
-    return render(request, "category_detail.html", context)
 
 def catalog_tags(request):
     return HttpResponse('Каталог тегов')
