@@ -5,10 +5,10 @@ from unidecode import unidecode
 
 
 class Post(models.Model):
-    title = models.CharField(max_length=100, unique=True)
-    content = models.TextField()
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+    title = models.CharField(max_length=100, unique=True, verbose_name="Заголовок")
+    content = models.TextField(verbose_name="Контент")
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания")
+    updated_at = models.DateTimeField(auto_now=True, verbose_name="Дата обновления")
     # Категория - внешний ключ
     category = models.ForeignKey(
         "Category", # Ссылка на модель категории
@@ -18,6 +18,21 @@ class Post(models.Model):
         related_name="posts", # Имя обратной связи
         default=None # Значение по умолчанию NULL
     )
+
+    def __str__(self):
+        return self.title
+    
+    def get_absolute_url(self):
+        """
+        Метод возвращает абсолютный URL для объекта Post
+        В админке Django, при создании или редактировании поста, будет ссылка "Посмотреть на сайте". В шаблонах тоже удобно вызвать его.
+        """
+        return reverse("blog:post_detail", args=[self.slug])
+    
+    class Meta:
+        verbose_name = "Пост"
+        verbose_name_plural = "Посты"
+        ordering = ["-created_at"]
 
 class Category(models.Model):
     name = models.CharField(max_length=100, verbose_name="Название")
@@ -169,6 +184,10 @@ category_6 = Category(name="Linux Аврора").save()
 category_7 = Category(name="Добрый добрый JS").save()
 
 category_8 = Category(name="Постгра").save()
-category_9 = Category(name="Оракл").save()
+category_9 = Category(name="Оракл БД").save()
+
+
+####################################  Создание суперпользователя  #######################################################
+
 
 """
