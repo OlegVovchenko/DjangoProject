@@ -1,10 +1,10 @@
-from django import views
 from django.db import models
 from django.urls import reverse
 from django.utils.text import slugify
 from unidecode import unidecode
 # Функция get_userr_model() возвращает модель пользователя, которая используется по умолчанию в проекте.
 from django.contrib.auth import get_user_model
+
 
 
 
