@@ -6,8 +6,6 @@ from unidecode import unidecode
 from django.contrib.auth import get_user_model
 
 
-
-
 class Post(models.Model):
     title = models.CharField(max_length=100, unique=True, verbose_name="Заголовок")
     slug = models.SlugField(max_length=250, unique=True, verbose_name="Слаг", blank=True, null=True)
@@ -49,6 +47,10 @@ class Tag(models.Model):
     
     def __str__(self):
         return self.name
+    
+    def get_absolute_url(self):
+        return reverse("blog:tag_detail", args=[self.slug])
+    
     
     def save(self , *args, **kwargs):
         self.slug = slugify(unidecode(self.name))
