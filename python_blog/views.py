@@ -1,10 +1,8 @@
-import re
-from sre_parse import CATEGORIES
-from django.shortcuts import render
 from django.http import HttpResponse
+from django.shortcuts import render
 from django.urls import reverse
-from .blog_data import dataset
-from .models import Category, Post
+from .models import Category, Post, Tag
+from django.db.models import Count
 
 
 def main(request):
@@ -29,7 +27,7 @@ def about(request):
 
 def catalog_posts(request):
     # Получаем все опубликованные посты
-    posts = [post for post in dataset if post['is_published']]
+    posts= Post.objects.all()
     context = {
         'title': 'Блог',
         'posts': posts
@@ -37,34 +35,49 @@ def catalog_posts(request):
     return render(request, 'blog.html', context)
 
 def post_detail(request, post_slug):
-    post = next((post for post in dataset if post['slug'] == post_slug), None)
-    
-    context = {
-        'title': post['title'],
-        'post': post
+    post= Post.objects.get(slug=post_slug)
+    context= {
+        "title": post.title, 
+        "post": post
     }
     return render(request, 'post_detail.html', context)
 
 def catalog_categories(request):
-    
-    CATEGORIES = Category.objects.all()
-
-    context: dict[str, Any] = {
-        "title": "Категории",
-        "text": "Текст страницы с категориями",
-        "categories": CATEGORIES,
+    categories= Category.objects.all()
+    context= {
+        "categories": categories, 
+        "title": "Категории блога"
     }
     return render(request, "catalog_categories.html", context)
 
 def category_detail(request, category_slug):
-    category: dict[str, str] = Category.objects.filter(slug=category_slug).first()
-    posts: list[dict[str, str]] = Post.objects.filter(category=category)
-
-    return render(request, "category_detail.html", {"category": category, "posts": posts})
+    category: dict[str, str] = Category.objects.get(slug=category_slug)
+    posts= category.posts.all()
+    context={
+        "title": f"Категория: {category.name}",
+        "category": category,
+        "posts": posts,
+        "active_menu": "categories"
+    }
+    return render(request, "category_detail.html", context)
 
 
 def catalog_tags(request):
-    return HttpResponse('Каталог тегов')
+    tags = Tag.objects.annotate(posts_count=Count('posts')).order_by('-posts_count')
+    context = {
+        "title": "Теги блога",
+        "tags": tags,
+        "active_menu": "tags"
+    }
+    return render(request, "catalog_tags.html", context)
 
 def tag_detail(request, tag_slug):
-    return HttpResponse(f'Страница тега {tag_slug}')
+    tag = Tag.objects.get(slug=tag_slug)
+    posts = tag.posts.all()
+    context = {
+        "title": f"Тег: {tag.name}",
+        "tag": tag,
+        "posts": posts,
+        "active_menu": "tags"
+    }
+    return render(request, "tag_detail.html", context)
