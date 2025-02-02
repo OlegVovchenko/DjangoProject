@@ -27,7 +27,7 @@ def about(request):
 
 def catalog_posts(request):
     # Получаем все опубликованные посты
-    posts= Post.objects.all()
+    posts= Post.objects.select_related('category', 'author').prefetch_related('tags').all()
     context = {
         'title': 'Блог',
         'posts': posts
