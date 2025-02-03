@@ -1,22 +1,32 @@
 {% extends "base.html" %}
+{% block title %}
+Категории блога
+{% endblock title %}
 {% block content %}
 
-    <h1>{{ title }}</h1>
-    <p>{{ text }}</p>
-    <hr>
-    {% comment %} Цикл шаблонизатора {% endcomment %}
-    {% for category in categories %}
-    
-    <p>Это категория: {{ category.name }}</p>
-    <p>Слаг: {{ category.slug }}</p>
-
-    {% comment %} Хардкордный URL {% endcomment %}
-    <a href="{{ category.slug}}">{{ category.name }}</a>
-
-    {% comment %} Правильное написание URL(шаблонный тег URL) {% endcomment %}
-    <a href="{% url "blog:category_detail" category.slug %}">{{ category.name }}</a>
-    {% comment %} Пример ссылки с get_absolut_url {% endcomment %}
-    <a href="{{ category.get_absolute_url }}">{{ category.name }}</a>
-    <hr>
-    {% endfor %}
-    {% endblock content %}
+    <div class="container mt-4">
+        <h1><i class="bi bi-folder"></i> Категории</h1>
+        <div class="row mt-4">
+            {% for category in categories %}
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ category.name }}</h5>
+                            <p class="card-text">{{ category.description }}</p>
+                            <p class="text-muted">Постов: {{ category.posts.count }}</p>
+                            <a href="{{ category.get_absolute_url }}" class="btn btn-primary">
+                                Посмотреть посты
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            {% empty %}
+                <div class="col-12">
+                    <div class="alert alert-info">
+                        <i class="bi bi-info-circle"></i> Категорий пока нет
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock content %}
