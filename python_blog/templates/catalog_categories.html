@@ -27,6 +27,7 @@
                     </div>
                 </div>
             {% endfor %}
+            {% include 'pagination.html' with page_obj=categories %}
         </div>
     </div>
 {% endblock content %}
