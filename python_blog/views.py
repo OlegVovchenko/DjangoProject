@@ -1,4 +1,3 @@
-from django.core import paginator
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.urls import reverse
@@ -30,7 +29,7 @@ def about(request):
 def catalog_posts(request):
     # Получаем все опубликованные посты
     posts= Post.objects.select_related('category', 'author').prefetch_related('tags').all()
-    paginator = Paginator(posts, 3) # Показываем по  3 поста на странице
+    paginator = Paginator(posts, 3) # Показываем по 3 поста на странице
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
     context = {
@@ -49,7 +48,7 @@ def post_detail(request, post_slug):
 
 def catalog_categories(request):
     categories= Category.objects.all()
-    paginator = Paginator(categories, 5) # Показываем по  3 категории на странице
+    paginator = Paginator(categories, 5) # Показываем по 5 категорий на странице
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
     context= {
@@ -61,7 +60,7 @@ def catalog_categories(request):
 def category_detail(request, category_slug):
     category: dict[str, str] = Category.objects.get(slug=category_slug)
     posts= category.posts.all()
-    paginator = Paginator(posts, 2) # Показываем по  3 поста на странице
+    paginator = Paginator(posts, 2) # Показываем по 2 поста на странице
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
     context={
@@ -75,7 +74,7 @@ def category_detail(request, category_slug):
 
 def catalog_tags(request):
     tags = Tag.objects.annotate(posts_count=Count('posts')).order_by('-posts_count')
-    paginator = Paginator(tags, 3) # Показываем по  3 тега на странице
+    paginator = Paginator(tags, 3) # Показываем по 3 тега на странице
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
     context = {
@@ -88,7 +87,7 @@ def catalog_tags(request):
 def tag_detail(request, tag_slug):
     tag = Tag.objects.get(slug=tag_slug)
     posts = tag.posts.all()
-    paginator = Paginator(posts, 3) # Показываем по  3 поста на странице
+    paginator = Paginator(posts, 3) # Показываем по 3 поста на странице
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
     context = {
