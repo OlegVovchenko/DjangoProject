@@ -113,23 +113,30 @@ body {
     box-shadow: 0 4px 8px rgba(0,0,0,0.2);
 }
 
-.page-link {
-    color: black;
-    text-decoration: none;
-    background-color: #fff;
-    border: 1px solid #dee2e6;
-    padding: 0.375rem 0.75rem;
-    margin-right: 0.25rem;
-    margin-bottom: 0.25rem;
-    border-radius: 0.25rem;
-}
+/* Стили для пагинации */
+    .page-link {
+        color: black;
+        text-decoration: none;
+        background-color: #fff;
+        border: 1px solid #dee2e6;
+        padding: 0.375rem 0.75rem;
+        margin-right: 0.25rem;
+        margin-bottom: 0.25rem;
+        border-radius: 0.25rem;
+    }
 
-.page-link:hover {
-    background-color: black;
-    color: #fff;
-}
+    .page-link:hover {
+        background-color: black;
+        color: #fff;
+    }
 
-.active>.page-link {
-    background-color: black;
-    color: #fff;
-}
+    /* Новый стиль для активного элемента пагинации */
+    .pagination .page-item.active .page-link {
+        background-color: #000000; /* Черный фон для активного элемента пагинации */
+        color: white; /* Желтый цвет текста */
+        border: 3px solid #ffc107; /* Желтая рамка, если необходимо */
+    }
+
+    .pagination .page-item.active {
+        background-color: transparent; /* Убираем фоновый цвет */
+    }
