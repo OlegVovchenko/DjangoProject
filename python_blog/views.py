@@ -1,9 +1,7 @@
-from django.conf.global_settings import MESSAGE_STORAGE
-from django.http import HttpResponse
 from django.shortcuts import render
 from django.urls import reverse
 from .models import Category, Post, Tag
-from django.db.models import Count
+from django.db.models import Count, Q
 from django.core.paginator import Paginator
 from django.contrib.messages import constants as messages
 from django.contrib import messages
@@ -43,12 +41,12 @@ def catalog_posts(request):
     paginator = Paginator(posts, 3) # Показываем по 3 поста на странице
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
+    get_params = request.GET.dict()
+    messages.success(request, f"GET запрос: {get_params}")
     context = {
         'title': 'Блог',
         'posts': page_obj
     }
-    # Сформируем послание на зеленом блоке message
-    messages.add_message(request, messages.SUCCESS, 'Посты успешно отображены')
     return render(request, 'blog.html', context)
 
 def post_detail(request, post_slug):
