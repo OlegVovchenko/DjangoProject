@@ -134,11 +134,17 @@ body {
     .pagination .page-item.active .page-link {
         background-color: #000000; /* Черный фон для активного элемента пагинации */
         color: white; /* Желтый цвет текста */
-        border: 3px solid #ffc107; /* Желтая рамка, если необходимо */
+        border: 2px solid #ffc107; /* Желтая рамка, если необходимо */
     }
 
     .pagination .page-item.active {
         background-color: transparent; /* Убираем фоновый цвет */
+    }
+
+    .pagination .page-item :focus {
+        border-color: #6c757d;
+        box-shadow: 0 0 0 0.25rem rgba(108, 117, 125, 0.25);
+        color: black;
     }
 
     /* Стили для формы поиска */

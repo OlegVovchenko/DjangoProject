@@ -1,9 +1,20 @@
+from django.conf.global_settings import MESSAGE_STORAGE
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.urls import reverse
 from .models import Category, Post, Tag
 from django.db.models import Count
 from django.core.paginator import Paginator
+from django.contrib.messages import constants as messages
+from django.contrib import messages
+
+MESSAGE_TAGS = {
+    messages.DEBUG: 'primary',
+    messages.INFO: 'info',
+    messages.SUCCESS: 'success',
+    messages.WARNING: 'warning',
+    messages.ERROR: 'danger',
+}
 
 
 def main(request):
@@ -36,6 +47,8 @@ def catalog_posts(request):
         'title': 'Блог',
         'posts': page_obj
     }
+    # Сформируем послание на зеленом блоке message
+    messages.add_message(request, messages.SUCCESS, 'Посты успешно отображены')
     return render(request, 'blog.html', context)
 
 def post_detail(request, post_slug):
