@@ -38,6 +38,31 @@ def about(request):
 def catalog_posts(request):
     # Получаем все опубликованные посты
     posts= Post.objects.select_related('category', 'author').prefetch_related('tags').all()
+    
+    search_query= request.GET.get('search_query','')
+    if search_query:
+        q_object = Q()
+        if request.GET.get('search_content') == '1':
+            q_object |= Q(content__icontains=search_query)
+        if request.GET.get('search_title') == '1':
+            q_object |= Q(title__icontains=search_query)
+        if request.GET.get('search_tags') == '1':
+            q_object |= Q(tags__name__icontains=search_query)
+        if request.GET.get('search_category') == '1':
+            q_object |= Q(category__name__icontains=search_query)
+        if request.GET.get('search_slug') == '1':
+            q_object |= Q(slug__icontains=search_query)
+        if q_object:
+            posts= posts.filter(q_object).distinct()
+    sort_by = request.GET.get('sort_by', 'created_date')
+    if sort_by == 'view_count':
+        posts = posts.order_by('-views')
+    elif sort_by == 'update_date':
+        posts= posts.order_by('-updated_at')
+    else:
+        posts= posts.order_by('-created_at')
+        
+    
     paginator = Paginator(posts, 3) # Показываем по 3 поста на странице
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
