@@ -1,10 +1,10 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 from .models import Category, Post, Tag
 from django.db.models import Count, Q, F
 from django.core.paginator import Paginator
 from django.contrib.messages import constants as messages
-from django.contrib import messages
+from django.contrib import messages, sessions
 
 MESSAGE_TAGS = {
     messages.DEBUG: 'primary',
@@ -75,8 +75,16 @@ def catalog_posts(request):
     return render(request, 'blog.html', context)
 
 def post_detail(request, post_slug):
-    post= Post.objects.filter(slug=post_slug).update(views=F('views') + 1)
+    post= get_object_or_404(Post, slug=post_slug)
     post= Post.objects.select_related('category', 'author').prefetch_related('tags').get(slug=post_slug)
+    sessions= request.session
+    key= f"viewed_posts_{post.id}"
+    if key not in sessions:
+        Post.objects.filter(id=post.id).update(views=F('views') + 1)
+        sessions[key]= True
+        post.refresh_from_db()
+
+    
     context= {
         "title": post.title, 
         "post": post
