@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.urls import reverse
 from .models import Category, Post, Tag
-from django.db.models import Count, Q
+from django.db.models import Count, Q, F
 from django.core.paginator import Paginator
 from django.contrib.messages import constants as messages
 from django.contrib import messages
@@ -75,7 +75,8 @@ def catalog_posts(request):
     return render(request, 'blog.html', context)
 
 def post_detail(request, post_slug):
-    post= Post.objects.get(slug=post_slug)
+    post= Post.objects.filter(slug=post_slug).update(views=F('views') + 1)
+    post= Post.objects.select_related('category', 'author').prefetch_related('tags').get(slug=post_slug)
     context= {
         "title": post.title, 
         "post": post
