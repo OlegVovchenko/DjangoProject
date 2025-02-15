@@ -1,10 +1,10 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
 from .models import Category, Post, Tag
 from django.db.models import Count, Q, F
 from django.core.paginator import Paginator
 from django.contrib.messages import constants as messages
-from django.contrib import messages, sessions
+from django.contrib import messages
 
 MESSAGE_TAGS = {
     messages.DEBUG: 'primary',
@@ -85,7 +85,6 @@ def post_detail(request, post_slug):
         sessions[key]= True
         post.refresh_from_db()
 
-    
     context= {
         "title": post.title, 
         "post": post
@@ -102,6 +101,18 @@ def catalog_categories(request):
         "title": "Категории блога"
     }
     return render(request, "catalog_categories.html", context)
+
+def category_create(request):
+    if request.method == "POST":
+        name= request.POST.get("name")
+        description= request.POST.get("description")
+
+        if name:
+            category = Category.objects.create(name=name, description=description or "Без описания")
+            messages.success(request, f"Категория '{category.name}' успешно создана")
+            return redirect("blog:catalog_categories")
+
+    return render(request, "category_create.html", {'title': 'Создание категории'})
 
 def category_detail(request, category_slug):
     category: dict[str, str] = Category.objects.get(slug=category_slug)
