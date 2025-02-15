@@ -70,7 +70,9 @@ def catalog_posts(request):
     messages.success(request, f"GET запрос: {get_params}")
     context = {
         'title': 'Блог',
-        'posts': page_obj
+        'posts': page_obj,
+        'sort_by': sort_by,
+        'search_query': search_query,
     }
     return render(request, 'blog.html', context)
 

@@ -2,32 +2,29 @@
     <ul class="pagination justify-content-center">
         {% if page_obj.has_previous %}
             <li class="page-item">
-                <a class="page-link" href="?page=1" aria-label="First">
+                <a class="page-link" href="?page=1&sort_by={{ sort_by }}&search_query={{ search_query }}{% if request.GET.search_content %}&search_content={{ request.GET.search_content }}{% endif %}{% if request.GET.search_title %}&search_title={{ request.GET.search_title }}{% endif %}{% if request.GET.search_tags %}&search_tags={{ request.GET.search_tags }}{% endif %}{% if request.GET.search_category %}&search_category={{ request.GET.search_category }}{% endif %}{% if request.GET.search_slug %}&search_slug={{ request.GET.search_slug }}{% endif %}" aria-label="First">
                     <span aria-hidden="true">&laquo;</span>
                 </a>
             </li>
             <li class="page-item">
-                <a class="page-link" href="?page={{ page_obj.previous_page_number }}">&lt;</a>
+                <a class="page-link" href="?page={{ page_obj.previous_page_number }}&sort_by={{ sort_by }}&search_query={{ search_query }}{% if request.GET.search_content %}&search_content={{ request.GET.search_content }}{% endif %}{% if request.GET.search_title %}&search_title={{ request.GET.search_title }}{% endif %}{% if request.GET.search_tags %}&search_tags={{ request.GET.search_tags }}{% endif %}{% if request.GET.search_category %}&search_category={{ request.GET.search_category }}{% endif %}{% if request.GET.search_slug %}&search_slug={{ request.GET.search_slug }}{% endif %}">&lt;</a>
             </li>
         {% endif %}
 
         {% for num in page_obj.paginator.page_range %}
-            {% if page_obj.number == num %}
-                <li class="page-item active"><a class="page-link">{{ num }}</a></li>
-            {% else %}
             <li class="page-item {% if page_obj.number == num %}active{% endif %}">
-                <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                <a class="page-link" href="?page={{ num }}&sort_by={{ sort_by }}&search_query={{ search_query }}{% if request.GET.search_content %}&search_content={{ request.GET.search_content }}{% endif %}{% if request.GET.search_title %}&search_title={{ request.GET.search_title }}{% endif %}{% if request.GET.search_tags %}&search_tags={{ request.GET.search_tags }}{% endif %}{% if request.GET.search_category %}&search_category={{ request.GET.search_category }}{% endif %}{% if request.GET.search_slug %}&search_slug={{ request.GET.search_slug }}{% endif %}">
+                    {{ num }}
+                </a>
             </li>
-            
-            {% endif %}
         {% endfor %}
 
         {% if page_obj.has_next %}
             <li class="page-item">
-                <a class="page-link" href="?page={{ page_obj.next_page_number }}">&gt;</a>
+                <a class="page-link" href="?page={{ page_obj.next_page_number }}&sort_by={{ sort_by }}&search_query={{ search_query }}{% if request.GET.search_content %}&search_content={{ request.GET.search_content }}{% endif %}{% if request.GET.search_title %}&search_title={{ request.GET.search_title }}{% endif %}{% if request.GET.search_tags %}&search_tags={{ request.GET.search_tags }}{% endif %}{% if request.GET.search_category %}&search_category={{ request.GET.search_category }}{% endif %}{% if request.GET.search_slug %}&search_slug={{ request.GET.search_slug }}{% endif %}">&gt;</a>
             </li>
             <li class="page-item">
-                <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}" aria-label="Last">
+                <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}&sort_by={{ sort_by }}&search_query={{ search_query }}{% if request.GET.search_content %}&search_content={{ request.GET.search_content }}{% endif %}{% if request.GET.search_title %}&search_title={{ request.GET.search_title }}{% endif %}{% if request.GET.search_tags %}&search_tags={{ request.GET.search_tags }}{% endif %}{% if request.GET.search_category %}&search_category={{ request.GET.search_category }}{% endif %}{% if request.GET.search_slug %}&search_slug={{ request.GET.search_slug }}{% endif %}" aria-label="Last">
                     <span aria-hidden="true">&raquo;</span>
                 </a>
             </li>
