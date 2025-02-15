@@ -66,8 +66,7 @@ def catalog_posts(request):
     paginator = Paginator(posts, 3) # Показываем по 3 поста на странице
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
-    get_params = request.GET.dict()
-    messages.success(request, f"GET запрос: {get_params}")
+    messages.add_message(request, messages.SUCCESS, 'Посты успешно отображены')
     context = {
         'title': 'Блог',
         'posts': page_obj,
