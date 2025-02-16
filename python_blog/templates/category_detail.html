@@ -23,7 +23,10 @@
                 <div class="card border-dark mb-4">
                     <div class="card-body">
                         <h1 class="card-title text-dark">
-                            <i class="bi bi-folder2-open"></i> {{ category.name }}
+                            <div class="d-flex align-items-center">
+                                <i class="bi bi-folder2-open mb-0"></i> {{ category.name }}
+                                <a href="{% url 'blog:category_update' category.slug %}" class="btn btn-warning ms-4">Обновить категорию</a>
+                            </div>    
                         </h1>
                         <p class="card-text">{{ category.description }}</p>
                         <span class="badge bg-warning text-dark">

@@ -1,4 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
+from django.template import context
 from django.urls import reverse
 from .models import Category, Post, Tag
 from django.db.models import Count, Q, F
@@ -111,8 +112,36 @@ def category_create(request):
             category = Category.objects.create(name=name, description=description or "Без описания")
             messages.success(request, f"Категория '{category.name}' успешно создана")
             return redirect("blog:catalog_categories")
+    
+    context= {
+        "title": "Создание категории",
+        "button_text": "Создать категорию",
+        "action_url": reverse("blog:category_create"),
+        "category": None
+    }
 
-    return render(request, "category_create.html", {'title': 'Создание категории'})
+    return render(request, "category_create.html", context)
+
+def category_update(request, category_slug):
+    category: dict[str, str] = Category.objects.get(slug=category_slug)
+    if request.method == "POST":
+        name= request.POST.get("name")
+        description= request.POST.get("description")
+
+        if name:
+            category = Category.objects.create(name=name, description=description or "Без описания")
+            category.save()
+            messages.success(request, f"Категория '{category.name}' успешно обновлена")
+            return redirect("blog:catalog_categories")
+    
+    context= {
+        "title": "Обновление категории",
+        "button_text": "Обновить категорию",
+        "action_url": reverse("blog:category_update", kwargs={"category_slug": category_slug}),
+        "category": category
+    }
+
+    return render(request, "category_create.html", context)
 
 def category_detail(request, category_slug):
     category: dict[str, str] = Category.objects.get(slug=category_slug)
