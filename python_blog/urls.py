@@ -1,5 +1,5 @@
 from django.urls import path
-from python_blog.views import catalog_posts, post_detail, catalog_categories, category_detail, catalog_tags, tag_detail, category_create, category_update
+from python_blog.views import catalog_posts, post_detail, catalog_categories, category_detail, catalog_tags, tag_detail, category_create, category_update, tag_create
 
 app_name = 'blog'
 
@@ -21,6 +21,7 @@ urlpatterns = [
     # Теги posts/tags/
     # Теги posts/tags/python
     path('tags/', catalog_tags, name='catalog_tags'),
+    path('tags/create/', tag_create, name='tag_create'),
     path('tags/<slug:tag_slug>/', tag_detail, name='tag_detail'),
 
     # Посты

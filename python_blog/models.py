@@ -42,7 +42,7 @@ class Post(models.Model):
         ordering = ["-created_at"]
 
 class Tag(models.Model):
-    name = models.CharField(max_length=100, verbose_name="Название")
+    name = models.CharField(max_length=200, verbose_name="Название")
     slug = models.SlugField(max_length=250, unique=True, verbose_name="Слаг")
     
     def __str__(self):

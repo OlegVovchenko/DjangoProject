@@ -7,7 +7,7 @@
     <div class="container mt-4">
         <div class="d-flex align-items-center">
             <h1><i class="bi bi-folder mb-0"></i> Категории</h1>
-            <a href="{% url 'blog:category_create' %}" class="btn btn-warning ms-4">Создать категорию</a>
+            <a href="{% url 'blog:category_create' %}" class="btn btn-sm btn-dark ms-4">Создать категорию</a>
         </div>
         <div class="row mt-4">
             {% for category in categories %}

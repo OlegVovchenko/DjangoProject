@@ -1,11 +1,11 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.template import context
 from django.urls import reverse
 from .models import Category, Post, Tag
 from django.db.models import Count, Q, F
 from django.core.paginator import Paginator
 from django.contrib.messages import constants as messages
 from django.contrib import messages
+from .forms import TagForm
 
 MESSAGE_TAGS = {
     messages.DEBUG: 'primary',
@@ -184,3 +184,22 @@ def tag_detail(request, tag_slug):
         "active_menu": "tags"
     }
     return render(request, "tag_detail.html", context)
+
+def tag_create(request):
+    if request.method == "POST":
+        form = TagForm(request.POST)
+        if form.is_valid():
+            name = form.cleaned_data['name']
+            tag = Tag.objects.create(name=name)
+            messages.success(request, f"Тег '{tag.name}' успешно создан")
+            return redirect("blog:catalog_tags")
+    else:
+        form = TagForm()
+
+    context = {
+        "title": "Создание тега",
+        "button_text": "Создать тег",
+        "action_url": reverse("blog:tag_create"),
+        "form": form
+    }
+    return render(request, "tag_form.html", context)

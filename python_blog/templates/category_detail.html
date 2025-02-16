@@ -13,7 +13,7 @@
                             <a href="{% url "blog:catalog_categories" %}" class="badge bg-dark text-white text-decoration-none">
                                 <i class="bi bi-folder"></i> Категории
                             </a>
-                        </li>
+                        </li>   
                         <li class="breadcrumb-item">
                             <span class="badge bg-warning text-dark">{{ category.name }}</span>
                         </li>
@@ -25,7 +25,7 @@
                         <h1 class="card-title text-dark">
                             <div class="d-flex align-items-center">
                                 <i class="bi bi-folder2-open mb-0"></i> {{ category.name }}
-                                <a href="{% url 'blog:category_update' category.slug %}" class="btn btn-warning ms-4">Обновить категорию</a>
+                                <a href="{% url 'blog:category_update' category.slug %}" class="btn btn-sm btn-dark ms-4">Обновить категорию</a>
                             </div>    
                         </h1>
                         <p class="card-text">{{ category.description }}</p>
