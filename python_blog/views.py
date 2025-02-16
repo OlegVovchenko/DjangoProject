@@ -129,7 +129,8 @@ def category_update(request, category_slug):
         description= request.POST.get("description")
 
         if name:
-            category = Category.objects.create(name=name, description=description or "Без описания")
+            category.name= name
+            category.description= description or "Без описания"
             category.save()
             messages.success(request, f"Категория '{category.name}' успешно обновлена")
             return redirect("blog:catalog_categories")
