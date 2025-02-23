@@ -37,7 +37,11 @@
                         {% endfor %}
 
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
-                            <a href="{% url 'blog:catalog_posts' %}" class="btn btn-outline-secondary me-md-2">Отмена</a>
+                            {% if post %}
+                                <a href="{% url 'blog:post_detail' post.slug %}" class="btn btn-outline-secondary me-md-2">Отмена</a>
+                            {% else %}
+                                <a href="{% url 'blog:catalog_posts' %}" class="btn btn-outline-secondary me-md-2">Отмена</a>
+                            {% endif %}
                             <button type="submit" class="btn btn-dark">{{ button_text }}</button>
                         </div>
                     </form>
