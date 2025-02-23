@@ -29,6 +29,12 @@ class TagForm(forms.Form):
         return name
     
 class PostForm(forms.ModelForm):
+
+    def __init__(self, *args, **kwargs):
+        instance = kwargs.get('instance')
+        super().__init__(*args, **kwargs)
+        if instance:
+            self.fields['tags_input'].initial = ', '.join(tag.name for tag in instance.tags.all())
     tags_input = forms.CharField(
         label="Теги",
         help_text="Введите теги через запятую",
@@ -64,9 +70,16 @@ class PostForm(forms.ModelForm):
     
     def clean_title(self):
         title = self.cleaned_data['title']
-        if Post.objects.filter(title__iexact=title).exists():
+        # Проверяем существование поста с таким заголовком, исключая текущий пост
+        if self.instance.pk:  # Если это обновление существующего поста
+            exists = Post.objects.exclude(pk=self.instance.pk).filter(title__iexact=title).exists()
+        else:  # Если это создание нового поста
+            exists = Post.objects.filter(title__iexact=title).exists()
+            
+        if exists:
             raise forms.ValidationError("Пост с таким заголовком уже существует")
         return title
+
 
     def save(self, commit=True):
         post = super().save(commit=False)

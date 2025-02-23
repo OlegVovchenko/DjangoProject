@@ -110,6 +110,26 @@ def post_create(request):
         "form": form
     }
     return render(request, "post_form.html", context)
+
+def post_update(request, post_slug):
+    post = Post.objects.get(slug=post_slug)
+    if request.method == "POST":
+        form = PostForm(request.POST, instance=post)
+        if form.is_valid():
+            post = form.save()
+            messages.success(request, 'Ваш пост успешно обновлен и отправлен на модерацию. После проверки администратором он будет опубликован.')
+            return redirect("blog:post_detail", post_slug=post.slug)
+    else:
+        form = PostForm(instance=post)
+        
+    context = {
+        "title": "Обновление поста",
+        "button_text": "Обновить пост",
+        "action_url": reverse("blog:post_update", kwargs={"post_slug": post.slug}),
+        "form": form,
+        "post": post
+    }
+    return render(request, "post_form.html", context)
 def catalog_categories(request):
     categories= Category.objects.all()
     paginator = Paginator(categories, 5) # Показываем по 5 категорий на странице
