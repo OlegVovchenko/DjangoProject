@@ -38,7 +38,8 @@ def about(request):
 
 def catalog_posts(request):
     # Получаем все опубликованные посты
-    posts= Post.objects.select_related('category', 'author').prefetch_related('tags').all()
+    # posts= Post.objects.select_related('category', 'author').prefetch_related('tags').all()
+    posts= Post.objects.select_related('category', 'author').prefetch_related('tags').filter(status="published")
     
     search_query= request.GET.get('search_query','')
     if search_query:

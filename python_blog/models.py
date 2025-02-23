@@ -7,6 +7,13 @@ from django.contrib.auth import get_user_model
 
 
 class Post(models.Model):
+    STATUS_CHOICES = [
+        ('draft', 'Черновик'),
+        ('review', 'На проверке'),
+        ('review_done', 'Проверено'),
+        ('published', 'Опубликовано'),
+    ]
+
     title = models.CharField(max_length=100, unique=True, verbose_name="Заголовок")
     slug = models.SlugField(max_length=250, unique=True, verbose_name="Слаг", blank=True, null=True)
     content = models.TextField(verbose_name="Контент")
@@ -14,6 +21,7 @@ class Post(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания")
     updated_at = models.DateTimeField(auto_now=True, verbose_name="Дата обновления")
     views = models.PositiveIntegerField(default=0, verbose_name="Количество просмотров")
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default="review", verbose_name="Статус")
     # Категория - внешний ключ
     category = models.ForeignKey(
         "Category", # Ссылка на модель Category
