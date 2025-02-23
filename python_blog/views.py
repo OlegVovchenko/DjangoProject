@@ -5,7 +5,7 @@ from django.db.models import Count, Q, F
 from django.core.paginator import Paginator
 from django.contrib.messages import constants as messages
 from django.contrib import messages
-from .forms import TagForm
+from .forms import TagForm, PostForm
 
 MESSAGE_TAGS = {
     messages.DEBUG: 'primary',
@@ -93,6 +93,23 @@ def post_detail(request, post_slug):
     }
     return render(request, 'post_detail.html', context)
 
+def post_create(request):
+    if request.method == "POST":
+        form = PostForm(request.POST)
+        if form.is_valid():
+            post = form.save(commit=True)
+            messages.success(request, 'Ваш пост успешно создан и отправлен на модерацию. После проверки администратором он будет опубликован.')
+            return redirect('blog:catalog_posts')
+    else:
+        form = PostForm()
+
+    context= {
+        "title": "Создание поста",
+        "button_text": "Создать пост",
+        "action_url": reverse("blog:post_create"),
+        "form": form
+    }
+    return render(request, "post_form.html", context)
 def catalog_categories(request):
     categories= Category.objects.all()
     paginator = Paginator(categories, 5) # Показываем по 5 категорий на странице
