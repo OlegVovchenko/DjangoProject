@@ -1,5 +1,7 @@
 from django import forms
 from .models import Tag, Post, Category
+from django.utils.text import slugify
+from unidecode import unidecode
 
 class TagForm(forms.Form):
     name = forms.CharField(
@@ -59,6 +61,12 @@ class PostForm(forms.ModelForm):
         if tags_input:
             return [tag.strip().lower() for tag in tags_input.split(',') if tag.strip()]
         return []
+    
+    def clean_title(self):
+        title = self.cleaned_data['title']
+        if Post.objects.filter(title__iexact=title).exists():
+            raise forms.ValidationError("Пост с таким заголовком уже существует")
+        return title
 
     def save(self, commit=True):
         post = super().save(commit=False)
@@ -68,7 +76,8 @@ class PostForm(forms.ModelForm):
             post.save()
             tags = self.cleaned_data.get('tags_input', [])
             for tag_name in tags:
-                tag, created = Tag.objects.get_or_create(name=tag_name)
+                tag_slug = slugify(unidecode(tag_name))
+                tag, created = Tag.objects.get_or_create(slug=tag_slug, defaults={"name": tag_name})
                 post.tags.add(tag)
                 
         return post
