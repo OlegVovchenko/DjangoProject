@@ -12,6 +12,12 @@ class CustomLoginView(LoginView):
     form_class = AuthenticationForm
     next_page = 'main'
 
+    def get_form(self, form_class=None):
+        form = super().get_form(form_class)
+        for field in form.fields.values():
+            field.widget.attrs['class'] = 'form-control'
+        return form
+
 def logout_user(request):
     logout(request)
     messages.success(request, 'Вы успешно вышли из системы!')
