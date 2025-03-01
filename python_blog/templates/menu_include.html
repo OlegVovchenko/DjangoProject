@@ -1,34 +1,48 @@
-<nav>
-    <ul>
-        {% for item in menu_items %}
-        <li>
-            <a href="{% url item.url_name %}" class="{% if item.is_active %}active{% endif %}">
-                {{ item.title }}
-            </a>
-        </li>
-        {% endfor %}
+<nav class="navbar navbar-expand-lg">
+    <div class="container">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        
+        <div class="collapse navbar-collapse" id="navbarContent">
+            <ul class="navbar-nav me-auto">
+                {% for item in menu_items %}
+                <li class="nav-item">
+                    <a href="{% url item.url_name %}" class="nav-link {% if item.is_active %}active{% endif %}">
+                        {{ item.title }}
+                    </a>
+                </li>
+                {% endfor %}
+            </ul>
 
-        {% if user.is_authenticated %}
-                    <li class="nav-item ms-md-auto">
+            <ul class="navbar-nav">
+                {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a href="{% url 'users:profile' %}" class="nav-link {% if 'profile' in request.path %}active{% endif %}">
+                            <i class="bi bi-person-circle"></i> {{ user.username }}
+                        </a>
+                    </li>
+                    <li class="nav-item">
                         <form action="{% url 'users:logout' %}" method="POST" class="d-inline">
                             {% csrf_token %}
                             <button type="submit" class="btn nav-link">
-                                Выйти ({{ user.username }})
+                                <i class="bi bi-box-arrow-right"></i> Выйти
                             </button>
                         </form>
                     </li>
                 {% else %}
-                    <li class="nav-item ms-md-auto">
-                        <a class="nav-link" href="{% url 'users:login' %}">
-                            Войти
+                    <li class="nav-item">
+                        <a class="nav-link {% if 'login' in request.path %}active{% endif %}" href="{% url 'users:login' %}">
+                            <i class="bi bi-box-arrow-in-right"></i> Войти
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'users:register' %}">
-                            Регистрация
+                        <a class="nav-link {% if 'register' in request.path %}active{% endif %}" href="{% url 'users:register' %}">
+                            <i class="bi bi-person-plus"></i> Регистрация
                         </a>
                     </li>
                 {% endif %}
-    </ul>
+            </ul>
+        </div>
+    </div>
 </nav>
-

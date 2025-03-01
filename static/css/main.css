@@ -44,53 +44,46 @@ body {
   
   /* Bootstrap Navbar кастомизация */
   .navbar {
-      background-color: #f8f9fa;
-      padding: 1rem;
-  }
-  
-  .navbar-nav {
-      width: 100%;
-  }
-  
-  .nav-link {
-      color: #212529;
-      text-decoration: none;
-      padding: 0.5rem 1rem;
-  }
-  
-  .nav-link:hover {
-      color: #000000;
-  }
-  
-  /* Активные элементы навигации */
-  .active {
-    color: #000000;
-    background-color: #ffc107;
-    padding: 8px 16px;
+    padding: 1rem;
+    background-color: #f8f9fa;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.navbar-nav .nav-link {
+    padding: 0.5rem 1rem;
+    transition: all 0.3s ease;
+}
+
+.navbar-nav .nav-link:hover {
+    background-color: #e9ecef;
     border-radius: 4px;
-    text-decoration: none;
-  }
-  
-  .nav-link.active {
-      color: #000000;
-      background-color: #ffc107;
-      border-radius: 4px;
-  }
-  
-  /* Медиа-запросы для мобильных устройств */
-  @media (max-width: 991px) {
-      .navbar-nav {
-          padding: 1rem 0;
-      }
-      
-      .nav-item {
-          margin-bottom: 0.5rem;
-      }
-      
-      .nav-link.active {
-          display: inline-block;
-      }
-  }
+}
+
+.nav-link.active {
+    background-color: #ffc107;
+    border-radius: 4px;
+    color: #000;
+}
+
+@media (max-width: 991px) {
+    .navbar-collapse {
+        padding: 1rem 0;
+    }
+    
+    .navbar-nav {
+        padding-bottom: 0.5rem;
+    }
+    
+    .navbar-nav .nav-item {
+        margin-bottom: 0.5rem;
+    }
+    
+    .navbar-nav .nav-link {
+        padding: 0.5rem;
+        text-align: center;
+    }
+}
+
   
 
 .stats-text {
