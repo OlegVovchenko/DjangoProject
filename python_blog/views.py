@@ -23,7 +23,7 @@ def main(request):
     context = {
         "title": "Главная страница",
         "text": "Текст главной страницы",
-        "user_status": "admin",
+        "user_status": "admin" if request.user.is_staff else "user" if request.user.is_authenticated else "guest"
     }
     return render(request, "main.html", context)
 
