@@ -198,3 +198,33 @@ body {
         visibility: hidden; /* Добавить скрытие, чтобы не занимало место */
     }
 }
+
+/* Стили для форм авторизации и регистрации */
+.form-container form p { 
+    margin-bottom: 1rem; 
+}
+
+.form-container form p label { 
+    display: block; 
+    width: 100%;
+    margin-bottom: 0.5rem;
+}
+
+.form-container form p input { 
+    width: 100%;
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #212529;
+    background-color: #fff;
+    border: 1px solid #ced4da;
+    border-radius: 0.375rem;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+.form-container form p input:focus {
+    border-color: #6c757d;
+    outline: 0;
+    box-shadow: 0 0 0 0.25rem rgba(108, 117, 125, 0.25);
+}
