@@ -45,11 +45,3 @@ class RegisterForm(UserCreationForm):
             'placeholder': 'Подтвердите пароль'
         })
     )
-
-    email = forms.EmailField(
-        label="Email",
-        widget=forms.EmailInput(attrs={
-            'class': 'form-control',
-            'placeholder': 'Введите email'
-        })
-    )

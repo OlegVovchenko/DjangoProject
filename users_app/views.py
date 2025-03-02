@@ -1,7 +1,6 @@
-from django.shortcuts import render,redirect
-from django.contrib.auth import authenticate, login, logout
+from django.shortcuts import redirect
+from django.contrib.auth import logout
 from django.contrib import messages
-from django.urls import reverse
 from django.contrib.auth.views import LoginView
 from .forms import LoginForm, RegisterForm
 from django.views.generic.edit import CreateView

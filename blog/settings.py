@@ -13,7 +13,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 from pathlib import Path
 from tempfile import tempdir, template
 
-from django.conf.global_settings import LOGIN_URL, STATIC_ROOT, STATICFILES_DIRS
+from django.conf.global_settings import LOGIN_URL, MEDIA_URL, STATIC_ROOT, STATICFILES_DIRS
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -142,3 +142,8 @@ INTERNAL_IPS = [
 ]
 
 LOGIN_URL = 'users:login'
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
+
+AUTH_USER_MODEL = 'users_app.CustomUser'
