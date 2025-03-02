@@ -6,6 +6,7 @@ from django.core.paginator import Paginator
 from django.contrib.messages import constants as messages
 from django.contrib import messages
 from .forms import TagForm, PostForm
+from django.contrib.auth.decorators import login_required
 
 MESSAGE_TAGS = {
     messages.DEBUG: 'primary',
@@ -93,6 +94,7 @@ def post_detail(request, post_slug):
     }
     return render(request, 'post_detail.html', context)
 
+@login_required
 def post_create(request):
     if request.method == "POST":
         form = PostForm(request.POST)
@@ -111,6 +113,7 @@ def post_create(request):
     }
     return render(request, "post_form.html", context)
 
+@login_required
 def post_update(request, post_slug):
     post = Post.objects.get(slug=post_slug)
     if request.method == "POST":
@@ -141,6 +144,7 @@ def catalog_categories(request):
     }
     return render(request, "catalog_categories.html", context)
 
+@login_required
 def category_create(request):
     if request.method == "POST":
         name= request.POST.get("name")
@@ -160,6 +164,7 @@ def category_create(request):
 
     return render(request, "category_create.html", context)
 
+@login_required
 def category_update(request, category_slug):
     category: dict[str, str] = Category.objects.get(slug=category_slug)
     if request.method == "POST":
@@ -223,6 +228,7 @@ def tag_detail(request, tag_slug):
     }
     return render(request, "tag_detail.html", context)
 
+@login_required
 def tag_create(request):
     if request.method == "POST":
         form = TagForm(request.POST)
