@@ -7,8 +7,9 @@
 {% block content %}
 <div class="container mt-4">
     <div class="row"mb-4>
-        <div class="col-12">
+        <div class="d-flex align-items-center">
             <h1 class="text-dark"><i class="bi bi-tags"></i> Облако тегов</h1>
+            <a href="{% url 'blog:tag_create' %}" class="btn btn-sm btn-dark ms-4">Создать тег</a>
         </div>
     </div>
 
