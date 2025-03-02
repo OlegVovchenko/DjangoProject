@@ -4,12 +4,12 @@ from django.contrib import messages
 from django.urls import reverse
 from django.contrib.auth.models import User
 from django.contrib.auth.views import LoginView
-from django.contrib.auth.forms import AuthenticationForm
+from .forms import LoginForm
 
 
 class CustomLoginView(LoginView):
     template_name = 'login.html'
-    form_class = AuthenticationForm
+    form_class = LoginForm
     next_page = 'main'
 
     def get_form(self, form_class=None):
